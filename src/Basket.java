@@ -1,31 +1,27 @@
+import java.util.HashMap;
 import java.util.Map;
+
 
 class Basket {
 
-  protected Purchase[] purchases = new Purchase[4];
+  private HashMap<String, Purchase> purchases = new HashMap<>();
 
   public void addProduct(String title, int count) {
-    for (int i = 0; i < purchases.length; i++) {
-      if (purchases[i] == null) {
-        purchases[i] = new Purchase(title, count);
-        return;
-      }
-      if (purchases[i].getProductName().equals(title)) {
-        purchases[i].increaseCount(count);
-        return;
-      }
+    if (purchases.containsKey(title)) {
+      Purchase purchase = purchases.get(title);
+      purchase.increaseCount(count);
+    } else {
+      Purchase purchase = new Purchase(title, count);
+      purchases.put(title, purchase);
     }
   }
 
   public long calculateTotalSum(Map<String, Integer> prices) {
     long sum = 0;
     System.out.println("КОРЗИНА:");
-    for (int i = 0; i < purchases.length; i++) {
-      Purchase purchase = purchases[i];
-      if (purchase == null) {
-        continue;
-      }
-      String productName = purchase.getProductName();
+    for (Map.Entry<String, Purchase> entry : purchases.entrySet()) {
+      String productName = entry.getKey();
+      Purchase purchase = entry.getValue();
       int productCount = purchase.getProductCount();
       int productPrice = prices.get(productName);
       System.out.println(

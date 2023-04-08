@@ -1,15 +1,9 @@
 class Purchase {
 
-  protected String productName;
-  protected int productCount;
+  private int productCount;
 
   public Purchase(String productName, int productCount) {
-    this.productName = productName;
     this.productCount = productCount;
-  }
-
-  public String getProductName() {
-    return productName;
   }
 
   public int getProductCount() {
